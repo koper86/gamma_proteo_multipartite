@@ -22,6 +22,10 @@ for dirpath, dirnames, files in os.walk(input_data_dir):
 
             p1 = sub.run([
                 'prokka',
+                '--prefix', '_'.join([genus, species, strain]),
+                '--fast',
+                '--norna',
+                '--notrna',
                 '--outdir', os.path.join(output_data_dir, dirs[-1], '_'.join([genus, species, strain])),
                 '--genus', genus,
                 '--species', species,
