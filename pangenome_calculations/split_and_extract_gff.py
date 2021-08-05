@@ -1,3 +1,4 @@
+import sys
 import subprocess as sub
 import os
 from Bio import SeqIO
@@ -6,11 +7,15 @@ import pandas as pd
 pd.options.display.max_columns = None
 pd.options.display.width = None
 
+# open prokka output - first script parameter and excel file with replicon size 'mutipartite_vibrio_pseudo.xls' - second parameter
+try:
+    prokka_results_dir = sys.argv[1]
+    xl_file_path = sys.argv[2]
+except:
+    print('No directory name passed')
+
 # parsing mutipartite_vibrio_pseudo.xls as data frame
-# xl_file = pd.read_excel('mutipartite_vibrio_pseudo.xls', sheet_name='Foglio1')
-xl_file = pd.read_excel(
-    '/home/user/PycharmProjects/gamma_proteo_multipartite/pangenome_calculations/mutipartite_vibrio_pseudo.xls',
-    sheet_name='Foglio1')
+xl_file = pd.read_excel(xl_file_path, sheet_name='Foglio1')
 
 # renaming columns to meet criteria
 xl_file = xl_file.rename(columns={
@@ -27,12 +32,6 @@ xl_file['org_name'] = xl_file['org_name'].astype('string')
 xl_file['genome_len'] = xl_file['genome_len'].astype('float64')
 xl_file['chromosome_len'] = xl_file['chromosome_len'].astype('float64')
 
-# parsing prokka output
-try:
-    # prokka_results_dir = sys.argv[1]
-    prokka_results_dir = '/home/user/PycharmProjects/gamma_proteo_multipartite/prokka_annotation/prokka_results'
-except:
-    print('No directory name passed')
 
 # adding columns for accession strings
 xl_file['chromosome_acc'] = ''
