@@ -13,7 +13,7 @@ find . -type f -iname '*chromid*.gff' -exec cp {} pangenome_calculations/chromid
 find . -type f -iname '*megaplasmid*.gff' -exec cp {} pangenome_calculations/megaplasmid_gff/ \;
 
 # species level pangenomes for entire genomes
-roary
+
 
 # genus level pangenomes for the entire genomes
 
