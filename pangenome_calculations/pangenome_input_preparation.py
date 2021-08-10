@@ -13,14 +13,14 @@ try:
 except:
     print('No directory name passed')
 
-prokka_results_dir = '/home/user/PycharmProjects/gamma_proteo_multipartite/prokka_annotation/prokka_results'
-roary_input_dir = '/home/user/PycharmProjects/gamma_proteo_multipartite/pangenome_calculations/pangenome_input'
+# prokka_results_dir = '/home/user/PycharmProjects/gamma_proteo_multipartite/prokka_annotation/prokka_results'
+# roary_input_dir = '/home/user/PycharmProjects/gamma_proteo_multipartite/pangenome_calculations/pangenome_input'
 
 # parsing mutipartite_vibrio_pseudo.xls as data frame
-# xl_file = pd.read_excel(xl_file_path, sheet_name='Foglio1')
-xl_file = pd.read_excel(
-    '/home/user/PycharmProjects/gamma_proteo_multipartite/pangenome_calculations/mutipartite_vibrio_pseudo.xls',
-    sheet_name='Foglio1')
+xl_file = pd.read_excel(xl_file_path, sheet_name='Foglio1')
+# xl_file = pd.read_excel(
+#     '/home/user/PycharmProjects/gamma_proteo_multipartite/pangenome_calculations/mutipartite_vibrio_pseudo.xls',
+#     sheet_name='Foglio1')
 
 # renaming columns to meet criteria
 xl_file = xl_file.rename(columns={
