@@ -9,8 +9,8 @@ try:
 except:
     print('No directory name passed')
 
-roary_input_dir = '/home/user/PycharmProjects/gamma_proteo_multipartite/pangenome_calculations/pangenome_input'
-roary_output_dir = '/home/user/PycharmProjects/gamma_proteo_multipartite/pangenome_calculations/pangenome_output'
+# roary_input_dir = '/home/user/PycharmProjects/gamma_proteo_multipartite/pangenome_calculations/pangenome_input'
+# roary_output_dir = '/home/user/PycharmProjects/gamma_proteo_multipartite/pangenome_calculations/pangenome_output'
 
 species_level_identity_treshold = '95'
 genus_level_identity_treshold = ['40', '50', '60', '70', '80', '90']
@@ -44,20 +44,24 @@ def calculate_pangenome(replicon_type):
                 output_path = os.path.join(roary_output_dir, replicon_calculations_type, genus_species_name)
                 # os.makedirs(output_path, exist_ok=True)
                 for iden_tresh in genus_level_identity_treshold:
-                    roary_command = 'roary -e -n -i {} -g 100000 -v -f {}_{} {}/*.gff'.format(iden_tresh,
+                    roary_command = 'roary -e -n -i {} -g 100000 -p 12 -v -f {}_{} {}/*.gff'.format(iden_tresh,
                                                                                               output_path, iden_tresh,
                                                                                               dirpath)
                     print(roary_command)
+                    p1 = sub.Popen(roary_command, shell=True)
+                    os.waitpid(p1.pid, 0)
+                    print('roary completed run')
         elif (replicon_type in dirpath) and ('genus' not in dirpath) and dirpath in non_empty_dirs:
             if files and len(os.listdir(dirpath)) >= 2:
                 output_path = os.path.join(roary_output_dir, replicon_calculations_type, genus_species_name)
-                roary_command = 'roary -e -n -i {} -g 100000 -v -f {} {}/*.gff'.format(species_level_identity_treshold,
+                roary_command = 'roary -e -n -i {} -g 100000 -p 12 -v -f {} {}/*.gff'.format(species_level_identity_treshold,
                                                                                        output_path,
                                                                                        dirpath)
                 print(roary_command)
-            # p1 = sub.Popen(roary_command, shell=True)
-            # os.waitpid(p1.pid, 0)
-            # print('roary completed run')
+                p1 = sub.Popen(roary_command, shell=True)
+                os.waitpid(p1.pid, 0)
+                print('roary completed run')
+
 
 
 
