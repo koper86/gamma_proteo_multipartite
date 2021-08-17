@@ -33,6 +33,19 @@ python pangenome_input_preparation.py prokka_results/ "multipartite_vibrio_pseud
 #for the species level stick with 95 percent.
 nohup python pangenome_calculations.py pangenome_input/ pangenome_output/ > pangenome_output.log &
 
+#make backup for pangenome calc
+cp -R pangenome_output/ pangenome_output_backup
 
+# plotting core and total genes for genus level calculations
+python pangenome_output_analysis.py
+
+# getting list of genes present in 95 percent of strains (accessory genome)
+query_pan_genome -a complement -c 95 -o accessory_output/chromosome/Photobacterium_genus_95.txt -g /media/umcs/edbfa4a4-ad51-4531-a25d-6022dbd3224c/gamma_multipartite/pangenome_output/chromosome/Photobacterium_genus_70/clustered_proteins $DYSK/gamma_multipartite/pangenome_input/chromosome/Photobacterium_genus/*.gff
+
+# extracting gene_list from accessory_output files
+cat accessory_output/chromosome/Photobacterium_genus_95.txt | cut -d':' -f1 > Photobacterium_genus_95_gene_list.txt
+
+# extracting sequences for accessory pangenome (95) based on gene_list from query_pan_genome and pan_genome_reference
+python pangenome_gene_list_extraction.py pangenome_output/chromosome/Photobacterium_genus_70/pan_genome_reference.fa accessory_output/chromosome/Photobacterium_genus_95_gene_list.txt accessory_output/chromosome/Photobacterium_genus_95_accessory_pangenome.fa
 
 

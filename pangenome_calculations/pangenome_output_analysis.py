@@ -41,7 +41,7 @@ for dirpath, dirnames, files in os.walk(roary_output_dir):
     splitted_path = splitall(dirpath)
     replicon_calculations_type = splitted_path[-2]
     genus_species_name = splitted_path[-1]
-    if 'genus' in genus_species_name:
+    if 'genus' in genus_species_name and 'entire_genome' in replicon_calculations_type:
         genus_name = genus_species_name.split('_')[-3]
         iden_tresh = genus_species_name.split('_')[-1]
         with open(os.path.join(dirpath, 'summary_statistics.txt')) as csv_file:
@@ -60,8 +60,6 @@ for dirpath, dirnames, files in os.walk(roary_output_dir):
                 'Total genes': genes_numbers[4],
             }, ignore_index=True)
 
-
-
 summary_statistics_df[
     ['Identity Treshold', 'Core genes', 'Soft core genes', 'Shell genes', 'Cloud genes', 'Total genes']] = \
     summary_statistics_df[
@@ -71,5 +69,5 @@ summary_statistics_df.sort_values(by=['Identity Treshold'], inplace=True)
 
 print(summary_statistics_df.info())
 
-sns.catplot(data=summary_statistics_df, x='Identity Treshold', y='Core genes', hue='Genus')
-sns.catplot(data=summary_statistics_df, x='Identity Treshold', y='Total genes', hue='Genus')
+sns.relplot(data=summary_statistics_df, x='Identity Treshold', y='Core genes', kind='line', hue='Genus')
+sns.relplot(data=summary_statistics_df, x='Identity Treshold', y='Total genes', kind='line', hue='Genus')
