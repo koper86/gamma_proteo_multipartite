@@ -9,9 +9,9 @@ try:
 except:
     print('No folder or file name given')
 
-gene_list_to_extract_path = '/home/user/PycharmProjects/gamma_proteo_multipartite/pangenome_calculations/accessory_output/chromosome/Aliivibrio_genus/Aliivibrio_genus_95_gene_list_represenative.txt'
-eggnog_mapper_annotation_pan_genome_path = '/home/user/PycharmProjects/gamma_proteo_multipartite/eggnog/eggnog_mapping/chromosome/Aliivibrio_genus/Aliivibrio_genus.emapper.annotations'
-output_csv_path = '/home/user/PycharmProjects/gamma_proteo_multipartite/COG_calculations/COG_output/Aliivibrio_chromosome_COG.csv'
+# gene_list_to_extract_path = '/home/user/PycharmProjects/gamma_proteo_multipartite/pangenome_calculations/accessory_output/chromosome/Aliivibrio_genus/Aliivibrio_genus_95_gene_list_represenative.txt'
+# eggnog_mapper_annotation_pan_genome_path = '/home/user/PycharmProjects/gamma_proteo_multipartite/eggnog/eggnog_mapping/chromosome/Aliivibrio_genus/Aliivibrio_genus.emapper.annotations'
+# output_csv_path = '/home/user/PycharmProjects/gamma_proteo_multipartite/COG_calculations/COG_output/Aliivibrio_chromosome_COG.csv'
 
 # parsing gene list from a valid percent of pangenome
 gene_list_to_extract_file = open(
