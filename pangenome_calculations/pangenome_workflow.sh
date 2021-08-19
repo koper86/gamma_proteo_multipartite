@@ -31,7 +31,7 @@ python pangenome_input_preparation.py prokka_results/ "multipartite_vibrio_pseud
 # according to talk with G diCenzo, species level pangenomes should be calc with
 # a range of tresholds (90, 80..40) and plotted (core genes and and num of total genes as a function of threshold)
 #for the species level stick with 95 percent.
-nohup python pangenome_calculations.py pangenome_input/ pangenome_output/ > pangenome_output.log &
+nohup python pangenome_calculations.py pangenome_input/ pangenome_output/ >pangenome_output.log &
 
 #make backup for pangenome calc
 cp -R pangenome_output/ pangenome_output_backup
@@ -39,13 +39,44 @@ cp -R pangenome_output/ pangenome_output_backup
 # plotting core and total genes for genus level calculations
 python pangenome_output_analysis.py
 
-# getting list of genes present in 95 percent of strains (accessory genome)
-query_pan_genome -a complement -c 95 -o accessory_output/chromosome/Photobacterium_genus_95.txt -g /media/umcs/edbfa4a4-ad51-4531-a25d-6022dbd3224c/gamma_multipartite/pangenome_output/chromosome/Photobacterium_genus_70/clustered_proteins $DYSK/gamma_multipartite/pangenome_input/chromosome/Photobacterium_genus/*.gff
+# getting list of genes present in 95 percent of strains (accessory genome) from roary set at -i 60
+#chromosome
+query_pan_genome -a complement -c 95 -o accessory_output/chromosome/Aliivibrio_genus/Aliivibrio_genus_95.txt -g /media/umcs/edbfa4a4-ad51-4531-a25d-6022dbd3224c/gamma_multipartite/pangenome_output/chromosome/Aliivibrio_genus_60/clustered_proteins $DYSK/gamma_multipartite/pangenome_input/chromosome/Aliivibrio_genus/*.gff
+query_pan_genome -a complement -c 95 -o accessory_output/chromosome/Photobacterium_genus/Photobacterium_genus_95.txt -g /media/umcs/edbfa4a4-ad51-4531-a25d-6022dbd3224c/gamma_multipartite/pangenome_output/chromosome/Photobacterium_genus_60/clustered_proteins $DYSK/gamma_multipartite/pangenome_input/chromosome/Photobacterium_genus/*.gff
+query_pan_genome -a complement -c 95 -o accessory_output/chromosome/Pseudoalteromonas_genus/Pseudoalteromonas_genus_95.txt -g /media/umcs/edbfa4a4-ad51-4531-a25d-6022dbd3224c/gamma_multipartite/pangenome_output/chromosome/Pseudoalteromonas_genus_60/clustered_proteins $DYSK/gamma_multipartite/pangenome_input/chromosome/Pseudoalteromonas_genus/*.gff
+query_pan_genome -a complement -c 95 -o accessory_output/chromosome/Salinivibrio_genus/Salinivibrio_genus_95.txt -g /media/umcs/edbfa4a4-ad51-4531-a25d-6022dbd3224c/gamma_multipartite/pangenome_output/chromosome/Salinivibrio_genus_60/clustered_proteins $DYSK/gamma_multipartite/pangenome_input/chromosome/Salinivibrio_genus/*.gff
+query_pan_genome -a complement -c 95 -o accessory_output/chromosome/Vibrio_genus/Vibrio_genus_95.txt -g /media/umcs/edbfa4a4-ad51-4531-a25d-6022dbd3224c/gamma_multipartite/pangenome_output/chromosome/Vibrio_genus_60/clustered_proteins $DYSK/gamma_multipartite/pangenome_input/chromosome/Vibrio_genus/*.gff
+
+# chromid
+query_pan_genome -a complement -c 95 -o accessory_output/chromid/Aliivibrio_genus/Aliivibrio_genus_95.txt -g /media/umcs/edbfa4a4-ad51-4531-a25d-6022dbd3224c/gamma_multipartite/pangenome_output/chromid/Aliivibrio_genus_60/clustered_proteins $DYSK/gamma_multipartite/pangenome_input/chromid/Aliivibrio_genus/*.gff
+query_pan_genome -a complement -c 95 -o accessory_output/chromid/Photobacterium_genus/Photobacterium_genus_95.txt -g /media/umcs/edbfa4a4-ad51-4531-a25d-6022dbd3224c/gamma_multipartite/pangenome_output/chromid/Photobacterium_genus_60/clustered_proteins $DYSK/gamma_multipartite/pangenome_input/chromid/Photobacterium_genus/*.gff
+query_pan_genome -a complement -c 95 -o accessory_output/chromid/Pseudoalteromonas_genus/Pseudoalteromonas_genus_95.txt -g /media/umcs/edbfa4a4-ad51-4531-a25d-6022dbd3224c/gamma_multipartite/pangenome_output/chromid/Pseudoalteromonas_genus_60/clustered_proteins $DYSK/gamma_multipartite/pangenome_input/chromid/Pseudoalteromonas_genus/*.gff
+query_pan_genome -a complement -c 95 -o accessory_output/chromid/Vibrio_genus/Vibrio_genus_95.txt -g /media/umcs/edbfa4a4-ad51-4531-a25d-6022dbd3224c/gamma_multipartite/pangenome_output/chromid/Vibrio_genus_60/clustered_proteins $DYSK/gamma_multipartite/pangenome_input/chromid/Vibrio_genus/*.gff
+
+# megaplasmid
+query_pan_genome -a complement -c 95 -o accessory_output/megaplasmid/Pseudoalteromonas_genus/Pseudoalteromonas_genus_95.txt -g /media/umcs/edbfa4a4-ad51-4531-a25d-6022dbd3224c/gamma_multipartite/pangenome_output/megaplasmid/Pseudoalteromonas_genus_60/clustered_proteins $DYSK/gamma_multipartite/pangenome_input/megaplasmid/Pseudoalteromonas_genus/*.gff
+query_pan_genome -a complement -c 95 -o accessory_output/megaplasmid/Salinivibrio_genus/Salinivibrio_genus_95.txt -g /media/umcs/edbfa4a4-ad51-4531-a25d-6022dbd3224c/gamma_multipartite/pangenome_output/megaplasmid/Salinivibrio_genus_60/clustered_proteins $DYSK/gamma_multipartite/pangenome_input/megaplasmid/Salinivibrio_genus/*.gff
+query_pan_genome -a complement -c 95 -o accessory_output/megaplasmid/Vibrio_genus/Vibrio_genus_95.txt -g /media/umcs/edbfa4a4-ad51-4531-a25d-6022dbd3224c/gamma_multipartite/pangenome_output/megaplasmid/Vibrio_genus_60/clustered_proteins $DYSK/gamma_multipartite/pangenome_input/megaplasmid/Vibrio_genus/*.gff
+
 
 # extracting gene_list from accessory_output files
-cat accessory_output/chromosome/Photobacterium_genus_95.txt | cut -d':' -f1 > Photobacterium_genus_95_gene_list.txt
+# chromosome
+cat accessory_output/chromosome/Aliivibrio_genus/Aliivibrio_genus_95.txt | cut -d':' -f1 > accessory_output/chromosome/Aliivibrio_genus/Aliivibrio_genus_95_gene_list.txt
+cat accessory_output/chromosome/Photobacterium_genus/Photobacterium_genus_95.txt | cut -d':' -f1 > accessory_output/chromosome/Photobacterium_genus/Photobacterium_genus_95_gene_list.txt
+cat accessory_output/chromosome/Pseudoalteromonas_genus/Pseudoalteromonas_genus_95.txt | cut -d':' -f1 > accessory_output/chromosome/Pseudoalteromonas_genus/Pseudoalteromonas_genus_95_gene_list.txt
+cat accessory_output/chromosome/Salinivibrio_genus/Salinivibrio_genus_95.txt | cut -d':' -f1 > accessory_output/chromosome/Salinivibrio_genus/Salinivibrio_genus_95_gene_list.txt
+cat accessory_output/chromosome/Vibrio_genus/Vibrio_genus_95.txt | cut -d':' -f1 > accessory_output/chromosome/Vibrio_genus/Vibrio_genus_95_gene_list.txt
 
-# extracting sequences for accessory pangenome (95) based on gene_list from query_pan_genome and pan_genome_reference
-python pangenome_gene_list_extraction.py pangenome_output/chromosome/Photobacterium_genus_70/pan_genome_reference.fa accessory_output/chromosome/Photobacterium_genus_95_gene_list.txt accessory_output/chromosome/Photobacterium_genus_95_accessory_pangenome.fa
+# chromid
+cat accessory_output/chromid/Aliivibrio_genus/Aliivibrio_genus_95.txt | cut -d':' -f1 > accessory_output/chromid/Aliivibrio_genus/Aliivibrio_genus_95_gene_list.txt
+cat accessory_output/chromid/Photobacterium_genus/Photobacterium_genus_95.txt | cut -d':' -f1 > accessory_output/chromid/Photobacterium_genus/Photobacterium_genus_95_gene_list.txt
+cat accessory_output/chromid/Pseudoalteromonas_genus/Pseudoalteromonas_genus_95.txt | cut -d':' -f1 > accessory_output/chromid/Pseudoalteromonas_genus/Pseudoalteromonas_genus_95_gene_list.txt
+cat accessory_output/chromid/Vibrio_genus/Vibrio_genus_95.txt | cut -d':' -f1 > accessory_output/chromid/Vibrio_genus/Vibrio_genus_95_gene_list.txt
 
+# megaplasmid
+cat accessory_output/megaplasmid/Pseudoalteromonas_genus/Pseudoalteromonas_genus_95.txt | cut -d':' -f1 > accessory_output/megaplasmid/Pseudoalteromonas_genus/Pseudoalteromonas_genus_95_gene_list.txt
+cat accessory_output/megaplasmid/Salinivibrio_genus/Salinivibrio_genus_95.txt | cut -d':' -f1 > accessory_output/megaplasmid/Salinivibrio_genus/Salinivibrio_genus_95_gene_list.txt
+cat accessory_output/megaplasmid/Vibrio_genus/Vibrio_genus_95.txt | cut -d':' -f1 > accessory_output/megaplasmid/Vibrio_genus/Vibrio_genus_95_gene_list.txt
 
+## extracting sequences for accessory pangenome (95) based on gene_list from query_pan_genome and pan_genome_reference (not necessary)
+#python pangenome_gene_list_extraction.py pangenome_output/chromosome/Photobacterium_genus_70/pan_genome_reference.fa accessory_output/chromosome/Photobacterium_genus_95_gene_list.txt accessory_output/chromosome/Photobacterium_genus/Photobacterium_95_accessory_nucl.fa
