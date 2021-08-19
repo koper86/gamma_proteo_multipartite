@@ -78,5 +78,21 @@ cat accessory_output/megaplasmid/Pseudoalteromonas_genus/Pseudoalteromonas_genus
 cat accessory_output/megaplasmid/Salinivibrio_genus/Salinivibrio_genus_95.txt | cut -d':' -f1 > accessory_output/megaplasmid/Salinivibrio_genus/Salinivibrio_genus_95_gene_list.txt
 cat accessory_output/megaplasmid/Vibrio_genus/Vibrio_genus_95.txt | cut -d':' -f1 > accessory_output/megaplasmid/Vibrio_genus/Vibrio_genus_95_gene_list.txt
 
-## extracting sequences for accessory pangenome (95) based on gene_list from query_pan_genome and pan_genome_reference (not necessary)
-#python pangenome_gene_list_extraction.py pangenome_output/chromosome/Photobacterium_genus_70/pan_genome_reference.fa accessory_output/chromosome/Photobacterium_genus_95_gene_list.txt accessory_output/chromosome/Photobacterium_genus/Photobacterium_95_accessory_nucl.fa
+# extracting representative CDS names from accessory_output files for COG extraction
+# chromosome
+cat accessory_output/chromosome/Aliivibrio_genus/Aliivibrio_genus_95.txt | cut -d':' -f2 | cut -f1 | sed 's/^ *//g' > accessory_output/chromosome/Aliivibrio_genus/Aliivibrio_genus_95_gene_list_represenative.txt
+cat accessory_output/chromosome/Photobacterium_genus/Photobacterium_genus_95.txt | cut -d':' -f2 | cut -f1 | sed 's/^ *//g' > accessory_output/chromosome/Photobacterium_genus/Photobacterium_genus_95_gene_list_represenative.txt
+cat accessory_output/chromosome/Pseudoalteromonas_genus/Pseudoalteromonas_genus_95.txt | cut -d':' -f2 | cut -f1 | sed 's/^ *//g' > accessory_output/chromosome/Pseudoalteromonas_genus/Pseudoalteromonas_genus_95_gene_list_represenative.txt
+cat accessory_output/chromosome/Salinivibrio_genus/Salinivibrio_genus_95.txt | cut -d':' -f2 | cut -f1 | sed 's/^ *//g' > accessory_output/chromosome/Salinivibrio_genus/Salinivibrio_genus_95_gene_list_represenative.txt
+cat accessory_output/chromosome/Vibrio_genus/Vibrio_genus_95.txt | cut -d':' -f2 | cut -f1 | sed 's/^ *//g' > accessory_output/chromosome/Vibrio_genus/Vibrio_genus_95_gene_list_represenative.txt
+
+# chromid
+cat accessory_output/chromid/Aliivibrio_genus/Aliivibrio_genus_95.txt | cut -d':' -f2 | cut -f1 | sed 's/^ *//g' > accessory_output/chromid/Aliivibrio_genus/Aliivibrio_genus_95_gene_list_represenative.txt
+cat accessory_output/chromid/Photobacterium_genus/Photobacterium_genus_95.txt | cut -d':' -f2 | cut -f1 | sed 's/^ *//g' > accessory_output/chromid/Photobacterium_genus/Photobacterium_genus_95_gene_list_represenative.txt
+cat accessory_output/chromid/Pseudoalteromonas_genus/Pseudoalteromonas_genus_95.txt | cut -d':' -f2 | cut -f1 | sed 's/^ *//g' > accessory_output/chromid/Pseudoalteromonas_genus/Pseudoalteromonas_genus_95_gene_list_represenative.txt
+cat accessory_output/chromid/Vibrio_genus/Vibrio_genus_95.txt | cut -d':' -f2 | cut -f1 | sed 's/^ *//g' > accessory_output/chromid/Vibrio_genus/Vibrio_genus_95_gene_list_represenative.txt
+
+# megaplasmid
+cat accessory_output/megaplasmid/Pseudoalteromonas_genus/Pseudoalteromonas_genus_95.txt | cut -d':' -f2 | cut -f1 | sed 's/^ *//g' > accessory_output/megaplasmid/Pseudoalteromonas_genus/Pseudoalteromonas_genus_95_gene_list_represenative.txt
+cat accessory_output/megaplasmid/Salinivibrio_genus/Salinivibrio_genus_95.txt | cut -d':' -f2 | cut -f1 | sed 's/^ *//g' > accessory_output/megaplasmid/Salinivibrio_genus/Salinivibrio_genus_95_gene_list_represenative.txt
+cat accessory_output/megaplasmid/Vibrio_genus/Vibrio_genus_95.txt | cut -d':' -f2 | cut -f1 | sed 's/^ *//g' > accessory_output/megaplasmid/Vibrio_genus/Vibrio_genus_95_gene_list_represenative.txt

@@ -9,7 +9,7 @@ except:
     print('Folder name not found')
 
 # accessory_output = '/home/user/PycharmProjects/gamma_proteo_multipartite/pangenome_calculations/accessory_output'
-# emapper_output = '/home/user/PycharmProjects/gamma_proteo_multipartite/eggnog_mapping/emapper_output/'
+# emapper_output = '/home/user/PycharmProjects/gamma_proteo_multipartite/eggnog/emapper_output/'
 
 def splitall(path):
     allparts = []
