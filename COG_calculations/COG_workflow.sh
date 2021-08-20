@@ -22,6 +22,24 @@ python COG_calculations.py accessory_output/megaplasmid/Pseudoalteromonas_genus/
 python COG_calculations.py accessory_output/megaplasmid/Salinivibrio_genus/Salinivibrio_genus_95_gene_list_represenative.txt eggnog_mapping/megaplasmid/Salinivibrio_genus/Salinivibrio_genus.emapper.annotations COG_output/Salinivibrio_megaplasmid_COG.csv
 python COG_calculations.py accessory_output/megaplasmid/Vibrio_genus/Vibrio_genus_95_gene_list_represenative.txt eggnog_mapping/megaplasmid/Vibrio_genus/Vibrio_genus.emapper.annotations COG_output/Vibrio_megaplasmid_COG.csv
 
+# calculating Fisher Exact Test statistics (inner genus rreplicon comparisons)
+python COG_fisher_test.py COG_output/Aliivibrio_chromosome_COG.csv COG_output/Aliivibrio_chromid_COG.csv
+
+python COG_fisher_test.py COG_output/Photobacterium_chromosome_COG.csv COG_output/Photobacterium_chromid_COG.csv
+
+python COG_fisher_test.py COG_output/Pseudoalteromonas_chromosome_COG.csv COG_output/Pseudoalteromonas_chromid_COG.csv
+python COG_fisher_test.py COG_output/Pseudoalteromonas_chromosome_COG.csv COG_output/Pseudoalteromonas_megaplasmid_COG.csv
+python COG_fisher_test.py COG_output/Pseudoalteromonas_chromid_COG.csv COG_output/Pseudoalteromonas_megaplasmid_COG.csv
+
+python COG_fisher_test.py COG_output/Salinivibrio_chromosome_COG.csv COG_output/Salinivibrio_megaplasmid_COG.csv
+
+python COG_fisher_test.py COG_output/Vibrio_chromosome_COG.csv COG_output/Vibrio_chromid_COG.csv
+python COG_fisher_test.py COG_output/Vibrio_chromosome_COG.csv COG_output/Vibrio_megaplasmid_COG.csv
+python COG_fisher_test.py COG_output/Vibrio_chromid_COG.csv COG_output/Vibrio_megaplasmid_COG.csv
+
+
+
+
 
 
 
