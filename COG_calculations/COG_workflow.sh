@@ -37,15 +37,72 @@ python COG_fisher_test.py COG_output/Vibrio_chromosome_COG.csv COG_output/Vibrio
 python COG_fisher_test.py COG_output/Vibrio_chromosome_COG.csv COG_output/Vibrio_megaplasmid_COG.csv
 python COG_fisher_test.py COG_output/Vibrio_chromid_COG.csv COG_output/Vibrio_megaplasmid_COG.csv
 
+#------------------------------------------------
+# concatenating extrachromosomal replicons into single files for intragenus comparisons
+# Pseudoalteromonas - chromid + megaplasmid
+mkdir -p accessory_output/extrachromosomal/Pseudoalteromonas_genus
+mkdir -p eggnog_mapping/extrachromosomal/Pseudoalteromonas_genus
+cat accessory_output/chromid/Pseudoalteromonas_genus/Pseudoalteromonas_genus_95_gene_list_represenative.txt \
+    accessory_output/megaplasmid/Pseudoalteromonas_genus/Pseudoalteromonas_genus_95_gene_list_represenative.txt \
+    > accessory_output/extrachromosomal/Pseudoalteromonas_genus/Pseudoalteromonas_genus_95_gene_list_represenative.txt
 
+cat eggnog_mapping/chromid/Pseudoalteromonas_genus/Pseudoalteromonas_genus.emapper.annotations \
+    | head -n -3 > \
+    eggnog_mapping/extrachromosomal/Pseudoalteromonas_genus/Pseudoalteromonas_genus.emapper.annotations
 
+cat eggnog_mapping/megaplasmid/Pseudoalteromonas_genus/Pseudoalteromonas_genus.emapper.annotations \
+    | tail -n +6 >> \
+    eggnog_mapping/extrachromosomal/Pseudoalteromonas_genus/Pseudoalteromonas_genus.emapper.annotations
 
+#check
+cat eggnog_mapping/chromid/Pseudoalteromonas_genus/Pseudoalteromonas_genus.emapper.annotations | wc -l
+# 7414
+cat eggnog_mapping/megaplasmid/Pseudoalteromonas_genus/Pseudoalteromonas_genus.emapper.annotations | wc -l
+# 1740
+cat eggnog_mapping/extrachromosomal/Pseudoalteromonas_genus/Pseudoalteromonas_genus.emapper.annotations | wc -l
+# 9146
 
+# Vibrio - chromid + megaplasmid
+mkdir -p accessory_output/extrachromosomal/Vibrio_genus
+mkdir -p eggnog_mapping/extrachromosomal/Vibrio_genus
+cat accessory_output/chromid/Vibrio_genus/Vibrio_genus_95_gene_list_represenative.txt \
+    accessory_output/megaplasmid/Vibrio_genus/Vibrio_genus_95_gene_list_represenative.txt \
+    > accessory_output/extrachromosomal/Vibrio_genus/Vibrio_genus_95_gene_list_represenative.txt
 
+cat eggnog_mapping/chromid/Vibrio_genus/Vibrio_genus.emapper.annotations \
+    | head -n -3 > \
+    eggnog_mapping/extrachromosomal/Vibrio_genus/Vibrio_genus.emapper.annotations
 
+cat eggnog_mapping/megaplasmid/Vibrio_genus/Vibrio_genus.emapper.annotations \
+    | tail -n +6 >> \
+    eggnog_mapping/extrachromosomal/Vibrio_genus/Vibrio_genus.emapper.annotations
 
+#check
+cat eggnog_mapping/chromid/Vibrio_genus/Vibrio_genus.emapper.annotations | wc -l
+# 23341
+cat eggnog_mapping/megaplasmid/Vibrio_genus/Vibrio_genus.emapper.annotations | wc -l
+# 1313
+cat eggnog_mapping/extrachromosomal/Vibrio_genus/Vibrio_genus.emapper.annotations | wc -l
+# 24646
 
+# calculating COGs for extrachromosomal replicons
+python COG_calculations.py \
+    accessory_output/extrachromosomal/Pseudoalteromonas_genus/Pseudoalteromonas_genus_95_gene_list_represenative.txt \
+    eggnog_mapping/extrachromosomal/Pseudoalteromonas_genus/Pseudoalteromonas_genus.emapper.annotations \
+    COG_output/Pseudoalteromonas_extrachromosomal_COG.csv
 
+python COG_calculations.py \
+    accessory_output/extrachromosomal/Vibrio_genus/Vibrio_genus_95_gene_list_represenative.txt \
+    eggnog_mapping/extrachromosomal/Vibrio_genus/Vibrio_genus.emapper.annotations \
+    COG_output/Vibrio_extrachromosomal_COG.csv
 
+# calculating Fisher's exact test for chromosome vs extrachromosomal replicons
+python COG_fisher_test.py \
+    COG_output/Pseudoalteromonas_chromosome_COG.csv \
+    COG_output/Pseudoalteromonas_extrachromosomal_COG.csv
+
+python COG_fisher_test.py \
+    COG_output/Vibrio_chromosome_COG.csv \
+    COG_output/Vibrio_extrachromosomal_COG.csv
 
 
