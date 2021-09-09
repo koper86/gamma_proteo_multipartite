@@ -105,4 +105,74 @@ python COG_fisher_test.py \
     COG_output/Vibrio_chromosome_COG.csv \
     COG_output/Vibrio_extrachromosomal_COG.csv
 
+#-------------------------------------------------------------------------
+#concatenating all chromosome and extrachromosomal genes lists and annotations into single files
+# chromosome
+mkdir -p accessory_output/chromosome/All_genus
+mkdir -p eggnog_mapping/chromosome/All_genus
 
+cat accessory_output/chromosome/Aliivibrio_genus/Aliivibrio_genus_95_gene_list_represenative.txt \
+    accessory_output/chromosome/Photobacterium_genus/Photobacterium_genus_95_gene_list_represenative.txt \
+    accessory_output/chromosome/Pseudoalteromonas_genus/Pseudoalteromonas_genus_95_gene_list_represenative.txt \
+    accessory_output/chromosome/Salinivibrio_genus/Salinivibrio_genus_95_gene_list_represenative.txt \
+    accessory_output/chromosome/Vibrio_genus/Vibrio_genus_95_gene_list_represenative.txt \
+    > accessory_output/chromosome/All_genus/All_genus_95_gene_list_represenative.txt
+
+cat eggnog_mapping/chromosome/Aliivibrio_genus/Aliivibrio_genus.emapper.annotations \
+    | head -n -3 > \
+    eggnog_mapping/chromosome/All_genus/All_genus.emapper.annotations
+cat eggnog_mapping/chromosome/Photobacterium_genus/Photobacterium_genus.emapper.annotations \
+    | tail -n +6 | head -n -3 >> \
+    eggnog_mapping/chromosome/All_genus/All_genus.emapper.annotations
+cat eggnog_mapping/chromosome/Pseudoalteromonas_genus/Pseudoalteromonas_genus.emapper.annotations \
+    | tail -n +6 | head -n -3 >> \
+    eggnog_mapping/chromosome/All_genus/All_genus.emapper.annotations
+cat eggnog_mapping/chromosome/Salinivibrio_genus/Salinivibrio_genus.emapper.annotations \
+    | tail -n +6 | head -n -3 >> \
+    eggnog_mapping/chromosome/All_genus/All_genus.emapper.annotations
+cat eggnog_mapping/chromosome/Vibrio_genus/Vibrio_genus.emapper.annotations \
+    | tail -n +6 >> \
+    eggnog_mapping/chromosome/All_genus/All_genus.emapper.annotations
+
+# extrachromosomal
+mkdir -p accessory_output/extrachromosomal/All_genus
+mkdir -p eggnog_mapping/extrachromosomal/All_genus
+
+cat accessory_output/chromid/Aliivibrio_genus/Aliivibrio_genus_95_gene_list_represenative.txt \
+    accessory_output/chromid/Photobacterium_genus/Photobacterium_genus_95_gene_list_represenative.txt \
+    accessory_output/extrachromosomal/Pseudoalteromonas_genus/Pseudoalteromonas_genus_95_gene_list_represenative.txt \
+    accessory_output/megaplasmid/Salinivibrio_genus/Salinivibrio_genus_95_gene_list_represenative.txt \
+    accessory_output/extrachromosomal/Vibrio_genus/Vibrio_genus_95_gene_list_represenative.txt \
+    > accessory_output/extrachromosomal/All_genus/All_genus_95_gene_list_represenative.txt
+
+cat eggnog_mapping/chromid/Aliivibrio_genus/Aliivibrio_genus.emapper.annotations \
+    | head -n -3 > \
+    eggnog_mapping/extrachromosomal/All_genus/All_genus.emapper.annotations
+cat eggnog_mapping/chromid/Photobacterium_genus/Photobacterium_genus.emapper.annotations \
+    | tail -n +6 | head -n -3 >> \
+    eggnog_mapping/extrachromosomal/All_genus/All_genus.emapper.annotations
+cat eggnog_mapping/extrachromosomal/Pseudoalteromonas_genus/Pseudoalteromonas_genus.emapper.annotations \
+    | tail -n +6 | head -n -3 >> \
+    eggnog_mapping/extrachromosomal/All_genus/All_genus.emapper.annotations
+cat eggnog_mapping/megaplasmid/Salinivibrio_genus/Salinivibrio_genus.emapper.annotations \
+    | tail -n +6 | head -n -3 >> \
+    eggnog_mapping/extrachromosomal/All_genus/All_genus.emapper.annotations
+cat eggnog_mapping/extrachromosomal/Vibrio_genus/Vibrio_genus.emapper.annotations \
+    | tail -n +6 >> \
+    eggnog_mapping/extrachromosomal/All_genus/All_genus.emapper.annotations
+
+# calculating COG for all genera
+python COG_calculations.py \
+    accessory_output/chromosome/All_genus/All_genus_95_gene_list_represenative.txt \
+    eggnog_mapping/chromosome/All_genus/All_genus.emapper.annotations \
+    COG_output/All_chromosome_COG.csv
+
+python COG_calculations.py \
+    accessory_output/extrachromosomal/All_genus/All_genus_95_gene_list_represenative.txt \
+    eggnog_mapping/extrachromosomal/All_genus/All_genus.emapper.annotations \
+    COG_output/All_extrachromosomal_COG.csv
+
+# calculating Fisher's exact test for all genera chromosome vs extrachromosomal replicons
+python COG_fisher_test.py \
+    COG_output/All_chromosome_COG.csv \
+    COG_output/All_extrachromosomal_COG.csv
