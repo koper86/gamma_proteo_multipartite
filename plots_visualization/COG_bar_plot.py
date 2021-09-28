@@ -12,7 +12,7 @@ try:
 except:
     print('No folders or files names provided')
 
-COG_output_path = '/home/user/PycharmProjects/gamma_proteo_multipartite/COG_calculations/COG_output'
+COG_output_path = '/home/user/PycharmProjects/gamma_proteo_multipartite/COG_calculations/COG_output_all_genera_merged'
 
 union_df = pd.DataFrame(index=None, columns=[
     'COG category', 'COG count', 'COG percent', 'Total number of proteins', 'Replicon type', 'Genus'])
@@ -33,17 +33,29 @@ union_df = union_df[union_df['COG count'] != 0]
 # deleting non-assigned proteins count and Z, A, B, W categories with very low percentage
 union_df = union_df[~union_df['COG category'].isin(['-', 'Z', 'A', 'B', 'W'])]
 
-g = sns.catplot(
+# g = sns.catplot(
+#     data=union_df[union_df['Replicon type'].isin(['chromosome', 'extrachromosomal'])],
+#     x="COG category",
+#     y="COG percent",
+#     kind="bar",
+#     hue="Replicon type",
+#     ci=None,
+#     aspect=3,
+#     height=4,
+#     col="Genus",
+#     col_wrap=3,
+# )
+#
+# g.fig.suptitle("Comparison of COG enrichment within chromosome and extrachromosomal replicons", y=1.05)
+
+sns.catplot(
     data=union_df[union_df['Replicon type'].isin(['chromosome', 'extrachromosomal'])],
     x="COG category",
     y="COG percent",
     kind="bar",
     hue="Replicon type",
+    hue_order =['chromosome', 'extrachromosomal'],
     ci=None,
     aspect=3,
     height=4,
-    col="Genus",
-    col_wrap=3,
 )
-
-g.fig.suptitle("Comparison of COG enrichment within chromosome and extrachromosomal replicons", y=1.05)
