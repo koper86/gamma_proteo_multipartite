@@ -39,6 +39,7 @@ cp -R pangenome_output/ pangenome_output_backup
 # plotting core and total genes for genus level calculations
 python pangenome_output_analysis.py
 
+#ACCESSORY
 # getting list of genes present in 95 percent of strains (accessory genome) from roary set at -i 60
 #chromosome
 query_pan_genome -a complement -c 95 -o accessory_output/chromosome/Aliivibrio_genus/Aliivibrio_genus_95.txt -g /media/umcs/edbfa4a4-ad51-4531-a25d-6022dbd3224c/gamma_multipartite/pangenome_output/chromosome/Aliivibrio_genus_60/clustered_proteins $DYSK/gamma_multipartite/pangenome_input/chromosome/Aliivibrio_genus/*.gff
@@ -96,3 +97,127 @@ cat accessory_output/chromid/Vibrio_genus/Vibrio_genus_95.txt | cut -d':' -f2 | 
 cat accessory_output/megaplasmid/Pseudoalteromonas_genus/Pseudoalteromonas_genus_95.txt | cut -d':' -f2 | cut -f1 | sed 's/^ *//g' > accessory_output/megaplasmid/Pseudoalteromonas_genus/Pseudoalteromonas_genus_95_gene_list_represenative.txt
 cat accessory_output/megaplasmid/Salinivibrio_genus/Salinivibrio_genus_95.txt | cut -d':' -f2 | cut -f1 | sed 's/^ *//g' > accessory_output/megaplasmid/Salinivibrio_genus/Salinivibrio_genus_95_gene_list_represenative.txt
 cat accessory_output/megaplasmid/Vibrio_genus/Vibrio_genus_95.txt | cut -d':' -f2 | cut -f1 | sed 's/^ *//g' > accessory_output/megaplasmid/Vibrio_genus/Vibrio_genus_95_gene_list_represenative.txt
+
+#--------------------------------------------------------------------------------------------------------------------------------------------
+#CORE
+#List of the genes included in the core pangenomes of the chromids
+# (or in general of the secondary replicons) for each genus.
+#chromosome
+query_pan_genome -a intersection -c 95 -o core_output/chromosome/Aliivibrio_genus/Aliivibrio_genus_95.txt -g /media/umcs/edbfa4a4-ad51-4531-a25d-6022dbd3224c/gamma_multipartite/pangenome_output/chromosome/Aliivibrio_genus_60/clustered_proteins $DYSK/gamma_multipartite/pangenome_input/chromosome/Aliivibrio_genus/*.gff
+query_pan_genome -a intersection -c 95 -o core_output/chromosome/Photobacterium_genus/Photobacterium_genus_95.txt -g /media/umcs/edbfa4a4-ad51-4531-a25d-6022dbd3224c/gamma_multipartite/pangenome_output/chromosome/Photobacterium_genus_60/clustered_proteins $DYSK/gamma_multipartite/pangenome_input/chromosome/Photobacterium_genus/*.gff
+query_pan_genome -a intersection -c 95 -o core_output/chromosome/Pseudoalteromonas_genus/Pseudoalteromonas_genus_95.txt -g /media/umcs/edbfa4a4-ad51-4531-a25d-6022dbd3224c/gamma_multipartite/pangenome_output/chromosome/Pseudoalteromonas_genus_60/clustered_proteins $DYSK/gamma_multipartite/pangenome_input/chromosome/Pseudoalteromonas_genus/*.gff
+query_pan_genome -a intersection -c 95 -o core_output/chromosome/Salinivibrio_genus/Salinivibrio_genus_95.txt -g /media/umcs/edbfa4a4-ad51-4531-a25d-6022dbd3224c/gamma_multipartite/pangenome_output/chromosome/Salinivibrio_genus_60/clustered_proteins $DYSK/gamma_multipartite/pangenome_input/chromosome/Salinivibrio_genus/*.gff
+query_pan_genome -a intersection -c 95 -o core_output/chromosome/Vibrio_genus/Vibrio_genus_95.txt -g /media/umcs/edbfa4a4-ad51-4531-a25d-6022dbd3224c/gamma_multipartite/pangenome_output/chromosome/Vibrio_genus_60/clustered_proteins $DYSK/gamma_multipartite/pangenome_input/chromosome/Vibrio_genus/*.gff
+
+# chromid
+query_pan_genome -a intersection -c 95 -o core_output/chromid/Aliivibrio_genus/Aliivibrio_genus_95.txt -g /media/umcs/edbfa4a4-ad51-4531-a25d-6022dbd3224c/gamma_multipartite/pangenome_output/chromid/Aliivibrio_genus_60/clustered_proteins $DYSK/gamma_multipartite/pangenome_input/chromid/Aliivibrio_genus/*.gff
+query_pan_genome -a intersection -c 95 -o core_output/chromid/Photobacterium_genus/Photobacterium_genus_95.txt -g /media/umcs/edbfa4a4-ad51-4531-a25d-6022dbd3224c/gamma_multipartite/pangenome_output/chromid/Photobacterium_genus_60/clustered_proteins $DYSK/gamma_multipartite/pangenome_input/chromid/Photobacterium_genus/*.gff
+query_pan_genome -a intersection -c 95 -o core_output/chromid/Pseudoalteromonas_genus/Pseudoalteromonas_genus_95.txt -g /media/umcs/edbfa4a4-ad51-4531-a25d-6022dbd3224c/gamma_multipartite/pangenome_output/chromid/Pseudoalteromonas_genus_60/clustered_proteins $DYSK/gamma_multipartite/pangenome_input/chromid/Pseudoalteromonas_genus/*.gff
+query_pan_genome -a intersection -c 95 -o core_output/chromid/Vibrio_genus/Vibrio_genus_95.txt -g /media/umcs/edbfa4a4-ad51-4531-a25d-6022dbd3224c/gamma_multipartite/pangenome_output/chromid/Vibrio_genus_60/clustered_proteins $DYSK/gamma_multipartite/pangenome_input/chromid/Vibrio_genus/*.gff
+
+# megaplasmid
+query_pan_genome -a intersection -c 95 -o core_output/megaplasmid/Pseudoalteromonas_genus/Pseudoalteromonas_genus_95.txt -g /media/umcs/edbfa4a4-ad51-4531-a25d-6022dbd3224c/gamma_multipartite/pangenome_output/megaplasmid/Pseudoalteromonas_genus_60/clustered_proteins $DYSK/gamma_multipartite/pangenome_input/megaplasmid/Pseudoalteromonas_genus/*.gff
+query_pan_genome -a intersection -c 95 -o core_output/megaplasmid/Salinivibrio_genus/Salinivibrio_genus_95.txt -g /media/umcs/edbfa4a4-ad51-4531-a25d-6022dbd3224c/gamma_multipartite/pangenome_output/megaplasmid/Salinivibrio_genus_60/clustered_proteins $DYSK/gamma_multipartite/pangenome_input/megaplasmid/Salinivibrio_genus/*.gff
+query_pan_genome -a intersection -c 95 -o core_output/megaplasmid/Vibrio_genus/Vibrio_genus_95.txt -g /media/umcs/edbfa4a4-ad51-4531-a25d-6022dbd3224c/gamma_multipartite/pangenome_output/megaplasmid/Vibrio_genus_60/clustered_proteins $DYSK/gamma_multipartite/pangenome_input/megaplasmid/Vibrio_genus/*.gff
+
+# extracting gene_list from accessory_output files
+# chromosome
+cat core_output/chromosome/Aliivibrio_genus/Aliivibrio_genus_95.txt | cut -d':' -f1 > core_output/chromosome/Aliivibrio_genus/Aliivibrio_genus_95_gene_list.txt
+cat core_output/chromosome/Photobacterium_genus/Photobacterium_genus_95.txt | cut -d':' -f1 > core_output/chromosome/Photobacterium_genus/Photobacterium_genus_95_gene_list.txt
+cat core_output/chromosome/Pseudoalteromonas_genus/Pseudoalteromonas_genus_95.txt | cut -d':' -f1 > core_output/chromosome/Pseudoalteromonas_genus/Pseudoalteromonas_genus_95_gene_list.txt
+cat core_output/chromosome/Salinivibrio_genus/Salinivibrio_genus_95.txt | cut -d':' -f1 > core_output/chromosome/Salinivibrio_genus/Salinivibrio_genus_95_gene_list.txt
+cat core_output/chromosome/Vibrio_genus/Vibrio_genus_95.txt | cut -d':' -f1 > core_output/chromosome/Vibrio_genus/Vibrio_genus_95_gene_list.txt
+
+# chromid
+cat core_output/chromid/Aliivibrio_genus/Aliivibrio_genus_95.txt | cut -d':' -f1 > core_output/chromid/Aliivibrio_genus/Aliivibrio_genus_95_gene_list.txt
+cat core_output/chromid/Photobacterium_genus/Photobacterium_genus_95.txt | cut -d':' -f1 > core_output/chromid/Photobacterium_genus/Photobacterium_genus_95_gene_list.txt
+cat core_output/chromid/Pseudoalteromonas_genus/Pseudoalteromonas_genus_95.txt | cut -d':' -f1 > core_output/chromid/Pseudoalteromonas_genus/Pseudoalteromonas_genus_95_gene_list.txt
+cat core_output/chromid/Vibrio_genus/Vibrio_genus_95.txt | cut -d':' -f1 > core_output/chromid/Vibrio_genus/Vibrio_genus_95_gene_list.txt
+
+# megaplasmid
+cat core_output/megaplasmid/Pseudoalteromonas_genus/Pseudoalteromonas_genus_95.txt | cut -d':' -f1 > core_output/megaplasmid/Pseudoalteromonas_genus/Pseudoalteromonas_genus_95_gene_list.txt
+cat core_output/megaplasmid/Salinivibrio_genus/Salinivibrio_genus_95.txt | cut -d':' -f1 > core_output/megaplasmid/Salinivibrio_genus/Salinivibrio_genus_95_gene_list.txt
+cat core_output/megaplasmid/Vibrio_genus/Vibrio_genus_95.txt | cut -d':' -f1 > core_output/megaplasmid/Vibrio_genus/Vibrio_genus_95_gene_list.txt
+
+# extracting representative CDS names from core_output files for COG extraction
+# chromosome
+cat core_output/chromosome/Aliivibrio_genus/Aliivibrio_genus_95.txt | cut -d':' -f2 | cut -f1 | sed 's/^ *//g' > core_output/chromosome/Aliivibrio_genus/Aliivibrio_genus_95_gene_list_represenative.txt
+cat core_output/chromosome/Photobacterium_genus/Photobacterium_genus_95.txt | cut -d':' -f2 | cut -f1 | sed 's/^ *//g' > core_output/chromosome/Photobacterium_genus/Photobacterium_genus_95_gene_list_represenative.txt
+cat core_output/chromosome/Pseudoalteromonas_genus/Pseudoalteromonas_genus_95.txt | cut -d':' -f2 | cut -f1 | sed 's/^ *//g' > core_output/chromosome/Pseudoalteromonas_genus/Pseudoalteromonas_genus_95_gene_list_represenative.txt
+cat core_output/chromosome/Salinivibrio_genus/Salinivibrio_genus_95.txt | cut -d':' -f2 | cut -f1 | sed 's/^ *//g' > core_output/chromosome/Salinivibrio_genus/Salinivibrio_genus_95_gene_list_represenative.txt
+cat core_output/chromosome/Vibrio_genus/Vibrio_genus_95.txt | cut -d':' -f2 | cut -f1 | sed 's/^ *//g' > core_output/chromosome/Vibrio_genus/Vibrio_genus_95_gene_list_represenative.txt
+
+# chromid
+cat core_output/chromid/Aliivibrio_genus/Aliivibrio_genus_95.txt | cut -d':' -f2 | cut -f1 | sed 's/^ *//g' > core_output/chromid/Aliivibrio_genus/Aliivibrio_genus_95_gene_list_represenative.txt
+cat core_output/chromid/Photobacterium_genus/Photobacterium_genus_95.txt | cut -d':' -f2 | cut -f1 | sed 's/^ *//g' > core_output/chromid/Photobacterium_genus/Photobacterium_genus_95_gene_list_represenative.txt
+cat core_output/chromid/Pseudoalteromonas_genus/Pseudoalteromonas_genus_95.txt | cut -d':' -f2 | cut -f1 | sed 's/^ *//g' > core_output/chromid/Pseudoalteromonas_genus/Pseudoalteromonas_genus_95_gene_list_represenative.txt
+cat core_output/chromid/Vibrio_genus/Vibrio_genus_95.txt | cut -d':' -f2 | cut -f1 | sed 's/^ *//g' > core_output/chromid/Vibrio_genus/Vibrio_genus_95_gene_list_represenative.txt
+
+# megaplasmid
+cat core_output/megaplasmid/Pseudoalteromonas_genus/Pseudoalteromonas_genus_95.txt | cut -d':' -f2 | cut -f1 | sed 's/^ *//g' > core_output/megaplasmid/Pseudoalteromonas_genus/Pseudoalteromonas_genus_95_gene_list_represenative.txt
+cat core_output/megaplasmid/Salinivibrio_genus/Salinivibrio_genus_95.txt | cut -d':' -f2 | cut -f1 | sed 's/^ *//g' > core_output/megaplasmid/Salinivibrio_genus/Salinivibrio_genus_95_gene_list_represenative.txt
+cat core_output/megaplasmid/Vibrio_genus/Vibrio_genus_95.txt | cut -d':' -f2 | cut -f1 | sed 's/^ *//g' > core_output/megaplasmid/Vibrio_genus/Vibrio_genus_95_gene_list_represenative.txt
+
+# extracting eggNOG mapping
+#chromosome
+python eggnog_annotation_extraction.py core_output/chromosome/Aliivibrio_genus/Aliivibrio_genus_95_gene_list_represenative.txt  \
+          eggnog_mapping/chromosome/Aliivibrio_genus/Aliivibrio_genus.emapper.annotations \
+          core_output/chromosome/Aliivibrio_genus/Aliivibrio_genus_95_gene_annotation.tsv
+python eggnog_annotation_extraction.py core_output/chromosome/Photobacterium_genus/Photobacterium_genus_95_gene_list_represenative.txt  \
+          eggnog_mapping/chromosome/Photobacterium_genus/Photobacterium_genus.emapper.annotations \
+          core_output/chromosome/Photobacterium_genus/Photobacterium_genus_95_gene_annotation.tsv
+python eggnog_annotation_extraction.py core_output/chromosome/Pseudoalteromonas_genus/Pseudoalteromonas_genus_95_gene_list_represenative.txt  \
+          eggnog_mapping/chromosome/Pseudoalteromonas_genus/Pseudoalteromonas_genus.emapper.annotations \
+          core_output/chromosome/Pseudoalteromonas_genus/Pseudoalteromonas_genus_95_gene_annotation.tsv
+python eggnog_annotation_extraction.py core_output/chromosome/Salinivibrio_genus/Salinivibrio_genus_95_gene_list_represenative.txt  \
+          eggnog_mapping/chromosome/Salinivibrio_genus/Salinivibrio_genus.emapper.annotations \
+          core_output/chromosome/Salinivibrio_genus/Salinivibrio_genus_95_gene_annotation.tsv
+python eggnog_annotation_extraction.py core_output/chromosome/Vibrio_genus/Vibrio_genus_95_gene_list_represenative.txt  \
+          eggnog_mapping/chromosome/Vibrio_genus/Vibrio_genus.emapper.annotations \
+          core_output/chromosome/Vibrio_genus/Vibrio_genus_95_gene_annotation.tsv
+
+#chromid
+python eggnog_annotation_extraction.py core_output/chromid/Aliivibrio_genus/Aliivibrio_genus_95_gene_list_represenative.txt  \
+          eggnog_mapping/chromid/Aliivibrio_genus/Aliivibrio_genus.emapper.annotations \
+          core_output/chromid/Aliivibrio_genus/Aliivibrio_genus_95_gene_annotation.tsv
+python eggnog_annotation_extraction.py core_output/chromid/Photobacterium_genus/Photobacterium_genus_95_gene_list_represenative.txt  \
+          eggnog_mapping/chromid/Photobacterium_genus/Photobacterium_genus.emapper.annotations \
+          core_output/chromid/Photobacterium_genus/Photobacterium_genus_95_gene_annotation.tsv
+python eggnog_annotation_extraction.py core_output/chromid/Pseudoalteromonas_genus/Pseudoalteromonas_genus_95_gene_list_represenative.txt  \
+          eggnog_mapping/chromid/Pseudoalteromonas_genus/Pseudoalteromonas_genus.emapper.annotations \
+          core_output/chromid/Pseudoalteromonas_genus/Pseudoalteromonas_genus_95_gene_annotation.tsv
+python eggnog_annotation_extraction.py core_output/chromid/Vibrio_genus/Vibrio_genus_95_gene_list_represenative.txt  \
+          eggnog_mapping/chromid/Vibrio_genus/Vibrio_genus.emapper.annotations \
+          core_output/chromid/Vibrio_genus/Vibrio_genus_95_gene_annotation.tsv
+
+#megaplasmid
+python eggnog_annotation_extraction.py core_output/megaplasmid/Pseudoalteromonas_genus/Pseudoalteromonas_genus_95_gene_list_represenative.txt  \
+          eggnog_mapping/megaplasmid/Pseudoalteromonas_genus/Pseudoalteromonas_genus.emapper.annotations \
+          core_output/megaplasmid/Pseudoalteromonas_genus/Pseudoalteromonas_genus_95_gene_annotation.tsv
+python eggnog_annotation_extraction.py core_output/megaplasmid/Salinivibrio_genus/Salinivibrio_genus_95_gene_list_represenative.txt  \
+          eggnog_mapping/megaplasmid/Salinivibrio_genus/Salinivibrio_genus.emapper.annotations \
+          core_output/megaplasmid/Salinivibrio_genus/Salinivibrio_genus_95_gene_annotation.tsv
+python eggnog_annotation_extraction.py core_output/megaplasmid/Vibrio_genus/Vibrio_genus_95_gene_list_represenative.txt  \
+          eggnog_mapping/megaplasmid/Vibrio_genus/Vibrio_genus.emapper.annotations \
+          core_output/megaplasmid/Vibrio_genus/Vibrio_genus_95_gene_annotation.tsv
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
