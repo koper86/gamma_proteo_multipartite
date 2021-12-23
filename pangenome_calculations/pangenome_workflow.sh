@@ -120,7 +120,7 @@ query_pan_genome -a intersection -c 95 -o core_output/megaplasmid/Pseudoalteromo
 query_pan_genome -a intersection -c 95 -o core_output/megaplasmid/Salinivibrio_genus/Salinivibrio_genus_95.txt -g /media/umcs/edbfa4a4-ad51-4531-a25d-6022dbd3224c/gamma_multipartite/pangenome_output/megaplasmid/Salinivibrio_genus_60/clustered_proteins $DYSK/gamma_multipartite/pangenome_input/megaplasmid/Salinivibrio_genus/*.gff
 query_pan_genome -a intersection -c 95 -o core_output/megaplasmid/Vibrio_genus/Vibrio_genus_95.txt -g /media/umcs/edbfa4a4-ad51-4531-a25d-6022dbd3224c/gamma_multipartite/pangenome_output/megaplasmid/Vibrio_genus_60/clustered_proteins $DYSK/gamma_multipartite/pangenome_input/megaplasmid/Vibrio_genus/*.gff
 
-# extracting gene_list from accessory_output files
+# extracting gene_list from core_output files
 # chromosome
 cat core_output/chromosome/Aliivibrio_genus/Aliivibrio_genus_95.txt | cut -d':' -f1 > core_output/chromosome/Aliivibrio_genus/Aliivibrio_genus_95_gene_list.txt
 cat core_output/chromosome/Photobacterium_genus/Photobacterium_genus_95.txt | cut -d':' -f1 > core_output/chromosome/Photobacterium_genus/Photobacterium_genus_95_gene_list.txt
@@ -201,13 +201,83 @@ python eggnog_annotation_extraction.py core_output/megaplasmid/Vibrio_genus/Vibr
           eggnog_mapping/megaplasmid/Vibrio_genus/Vibrio_genus.emapper.annotations \
           core_output/megaplasmid/Vibrio_genus/Vibrio_genus_95_gene_annotation.tsv
 
+#------------------------------------------------------------------------------------------
+# CORE EXTRACHROMOSOMAL TOGETHER
+# For Aliivibrio genus it will be the same as chromid core (no megaplasmids found)
+# For Photobacterium genus it will be the same as chromid core (no megaplasmids found)
+# For Salinivibrio genus it will be the same as megaplasmids core (no chromids found)
+
+# For Pseudoalteromonas and Vibrio there is a need to recalculate pangenome for extrachromosomal replicons
+# (concatenating input before pangenome calculations). I am doing it with -i 60 - because all others were also made that way
+
+mkdir pangenome_input/extrachromosomal
+mkdir pangenome_input/extrachromosomal/Pseudoalteromonas_genus
+mkdir pangenome_input/extrachromosomal/Vibrio_genus
+
+cp pangenome_input/chromid/Pseudoalteromonas_genus/*.gff pangenome_input/extrachromosomal/Pseudoalteromonas_genus
+cp pangenome_input/megaplasmid/Pseudoalteromonas_genus/*.gff pangenome_input/extrachromosomal/Pseudoalteromonas_genus
+
+cp pangenome_input/chromid/Vibrio_genus/*.gff pangenome_input/extrachromosomal/Vibrio_genus
+cp pangenome_input/megaplasmid/Vibrio_genus/*.gff pangenome_input/extrachromosomal/Vibrio_genus
+
+# check
+ls pangenome_input/chromid/Pseudoalteromonas_genus/*.gff | wc -l
+ls pangenome_input/megaplasmid/Pseudoalteromonas_genus/*.gff | wc -l
+ls pangenome_input/extrachromosomal/Pseudoalteromonas_genus/*.gff | wc -l
+
+ls pangenome_input/chromid/Vibrio_genus/*.gff | wc -l
+ls pangenome_input/megaplasmid/Vibrio_genus/*.gff | wc -l
+ls pangenome_input/extrachromosomal/Vibrio_genus/*.gff | wc -l
 
 
+roary -e -n -i 60 \
+      -g 100000 -p 12 -v \
+      -f $DYSK/gamma_multipartite/pangenome_output/extrachromosomal/Pseudoalteromonas_genus_60/ \
+      $DYSK/gamma_multipartite/pangenome_input/extrachromosomal/Pseudoalteromonas_genus/*.gff
+
+roary -e -n -i 60 \
+      -g 100000 -p 12 -v \
+      -f $DYSK/gamma_multipartite/pangenome_output/extrachromosomal/Vibrio_genus_60/ \
+      $DYSK/gamma_multipartite/pangenome_input/extrachromosomal/Vibrio_genus/*.gff
+
+#querying core genomes
+query_pan_genome -a intersection \
+                 -c 95 \
+                 -o $DYSK/gamma_multipartite/core_output/extrachromosomal/Pseudoalteromonas_genus/Pseudoalteromonas_genus_95.txt \
+                 -g $DYSK/gamma_multipartite/pangenome_output/extrachromosomal/Pseudoalteromonas_genus_60/clustered_proteins \
+                 $DYSK/gamma_multipartite/pangenome_input/extrachromosomal/Pseudoalteromonas_genus/*.gff
+
+query_pan_genome -a intersection \
+                 -c 95 \
+                 -o $DYSK/gamma_multipartite/core_output/extrachromosomal/Vibrio_genus/Vibrio_genus_95.txt \
+                 -g $DYSK/gamma_multipartite/pangenome_output/extrachromosomal/Vibrio_genus_60/clustered_proteins \
+                 $DYSK/gamma_multipartite/pangenome_input/extrachromosomal/Vibrio_genus/*.gff
+
+# extracting gene_list from core_output files
+cat $DYSK/gamma_multipartite/core_output/extrachromosomal/Pseudoalteromonas_genus/Pseudoalteromonas_genus_95.txt \
+    | cut -d':' -f1 > $DYSK/gamma_multipartite/core_output/extrachromosomal/Pseudoalteromonas_genus/Pseudoalteromonas_genus_95_gene_list.txt
+
+cat $DYSK/gamma_multipartite/core_output/extrachromosomal/Vibrio_genus/Vibrio_genus_95.txt \
+    | cut -d':' -f1 > $DYSK/gamma_multipartite/core_output/extrachromosomal/Vibrio_genus/Vibrio_genus_95_gene_list.txt
 
 
+# extracting representative CDS names from core_output files for annotation extraction
+cat $DYSK/gamma_multipartite/core_output/extrachromosomal/Pseudoalteromonas_genus/Pseudoalteromonas_genus_95.txt \
+    | cut -d':' -f2 | cut -f1 | sed 's/^ *//g' > $DYSK/gamma_multipartite/core_output/extrachromosomal/Pseudoalteromonas_genus/Pseudoalteromonas_genus_95_gene_list_represenative.txt
 
+cat $DYSK/gamma_multipartite/core_output/extrachromosomal/Vibrio_genus/Vibrio_genus_95.txt \
+    | cut -d':' -f2 | cut -f1 | sed 's/^ *//g' > $DYSK/gamma_multipartite/core_output/extrachromosomal/Vibrio_genus/Vibrio_genus_95_gene_list_represenative.txt
 
+# extracting eggNOG annotation for core genes
+python eggnog_annotation_extraction.py \
+          $DYSK/gamma_multipartite/core_output/extrachromosomal/Pseudoalteromonas_genus/Pseudoalteromonas_genus_95_gene_list_represenative.txt  \
+          $DYSK/gamma_multipartite/eggnog_mapping/extrachromosomal/Pseudoalteromonas_genus/Pseudoalteromonas_genus.emapper.annotations \
+          $DYSK/gamma_multipartite/core_output/extrachromosomal/Pseudoalteromonas_genus/Pseudoalteromonas_genus_95_gene_annotation.tsv
 
+python eggnog_annotation_extraction.py \
+          $DYSK/gamma_multipartite/core_output/extrachromosomal/Vibrio_genus/Vibrio_genus_95_gene_list_represenative.txt  \
+          $DYSK/gamma_multipartite/eggnog_mapping/extrachromosomal/Vibrio_genus/Vibrio_genus.emapper.annotations \
+          $DYSK/gamma_multipartite/core_output/extrachromosomal/Vibrio_genus/Vibrio_genus_95_gene_annotation.tsv
 
 
 
