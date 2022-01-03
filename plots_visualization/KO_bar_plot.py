@@ -22,14 +22,17 @@ for dirpath, dirnames, files in os.walk(KO_output_path):
             replicon_df['Genus'] = genus_name
             union_df = union_df.append(replicon_df)
 
+union_df.loc[union_df['Genus'].isin(['All']), ['Genus']] = 'Al'
+
 # deleting 0 rows for KO counts
 union_df = union_df[union_df['KO count'] != 0]
 
 # setting percent threshold to show
-union_df = union_df[union_df['KO percent'] >= 0.5]
+union_df = union_df[union_df['KO percent'] >= 1]
 
 # sorting values according to KO category
 union_df = union_df.sort_values(['KO category', 'Genus'])
+union_df = union_df.sort_values(['Genus'])
 
 g = sns.catplot(
     data=union_df[union_df['Replicon type'].isin(['chromosome', 'extrachromosomal'])],
@@ -47,7 +50,6 @@ g.fig.suptitle("Comparison of KO enrichment within chromosome and extrachromosom
 g.set_titles('$\it{col_name}$')
 plt.xlim(0, 25)
 plt.show()
-
 
 # sns.catplot(
 #     data=union_df[union_df['Replicon type'].isin(['chromosome', 'extrachromosomal'])],

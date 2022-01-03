@@ -279,15 +279,76 @@ python eggnog_annotation_extraction.py \
           $DYSK/gamma_multipartite/eggnog_mapping/extrachromosomal/Vibrio_genus/Vibrio_genus.emapper.annotations \
           $DYSK/gamma_multipartite/core_output/extrachromosomal/Vibrio_genus/Vibrio_genus_95_gene_annotation.tsv
 
+# -------------------------------------------------------------------------------
+# ACCESSORY EXTRACHROMOSOMAL TOGETHER
+
+query_pan_genome -a complement \
+                 -c 95 \
+                 -o $DYSK/gamma_multipartite/accessory_output/extrachromosomal/Pseudoalteromonas_genus/Pseudoalteromonas_genus_95.txt \
+                 -g $DYSK/gamma_multipartite/pangenome_output/extrachromosomal/Pseudoalteromonas_genus_60/clustered_proteins \
+                 $DYSK/gamma_multipartite/pangenome_input/extrachromosomal/Pseudoalteromonas_genus/*.gff
+
+query_pan_genome -a complement \
+                 -c 95 \
+                 -o $DYSK/gamma_multipartite/accessory_output/extrachromosomal/Vibrio_genus/Vibrio_genus_95.txt \
+                 -g $DYSK/gamma_multipartite/pangenome_output/extrachromosomal/Vibrio_genus_60/clustered_proteins \
+                 $DYSK/gamma_multipartite/pangenome_input/extrachromosomal/Vibrio_genus/*.gff
+
+# extracting gene_list from extrachromosomal accessory_output files
+cat $DYSK/gamma_multipartite/accessory_output/extrachromosomal/Pseudoalteromonas_genus/Pseudoalteromonas_genus_95.txt \
+    | cut -d':' -f1 > $DYSK/gamma_multipartite/accessory_output/extrachromosomal/Pseudoalteromonas_genus/Pseudoalteromonas_genus_95_gene_list.txt
+
+cat $DYSK/gamma_multipartite/accessory_output/extrachromosomal/Vibrio_genus/Vibrio_genus_95.txt \
+    | cut -d':' -f1 > $DYSK/gamma_multipartite/accessory_output/extrachromosomal/Vibrio_genus/Vibrio_genus_95_gene_list.txt
+
+# extracting representative CDS names from accessory_output files for annotation extraction
+cat $DYSK/gamma_multipartite/accessory_output/extrachromosomal/Pseudoalteromonas_genus/Pseudoalteromonas_genus_95.txt \
+    | cut -d':' -f2 | cut -f1 | sed 's/^ *//g' > $DYSK/gamma_multipartite/accessory_output/extrachromosomal/Pseudoalteromonas_genus/Pseudoalteromonas_genus_95_gene_list_represenative.txt
+
+cat $DYSK/gamma_multipartite/accessory_output/extrachromosomal/Vibrio_genus/Vibrio_genus_95.txt \
+    | cut -d':' -f2 | cut -f1 | sed 's/^ *//g' > $DYSK/gamma_multipartite/accessory_output/extrachromosomal/Vibrio_genus/Vibrio_genus_95_gene_list_represenative.txt
 
 
+#--------------------------------------------------------------------------------------------------
+# Calculating global pangenome for all chromosomes and all megaplasmids + chromids together (v3)
 
+roary -e -n -i 60 \
+      -g 100000 -p 12 -v \
+      -f $DYSK/gamma_multipartite/pangenome_output/chromosome/All_genus_60/ \
+      $DYSK/gamma_multipartite/pangenome_input/chromosome/All_genus/*.gff
 
+nohup sh -c 'roary -e -n -i 60 -g 100000 -p 12 -v -f $DYSK/gamma_multipartite/pangenome_output/chromosome/All_genus_60/ $DYSK/gamma_multipartite/pangenome_input/chromosome/All_genus/*.gff' &
 
+roary -e -n -i 60 \
+      -g 100000 -p 12 -v \
+      -f $DYSK/gamma_multipartite/pangenome_output/extrachromosomal/All_genus_60/ \
+      $DYSK/gamma_multipartite/pangenome_input/extrachromosomal/All_genus/*.gff
 
+nohup sh -c 'roary -e -n -i 60 -g 100000 -p 12 -v -f $DYSK/gamma_multipartite/pangenome_output/extrachromosomal/All_genus_60/ $DYSK/gamma_multipartite/pangenome_input/extrachromosomal/All_genus/*.gff' &
 
+# querying accessory pangenome
+query_pan_genome -a complement \
+                 -c 95 \
+                 -o $DYSK/gamma_multipartite/accessory_output/chromosome/All_genus/All_genus_95.txt \
+                 -g $DYSK/gamma_multipartite/pangenome_output/chromosome/All_genus_60/clustered_proteins \
+                 $DYSK/gamma_multipartite/pangenome_input/chromosome/All_genus/*.gff
 
+query_pan_genome -a complement \
+                 -c 95 \
+                 -o $DYSK/gamma_multipartite/accessory_output/extrachromosomal/All_genus/All_genus_95.txt \
+                 -g $DYSK/gamma_multipartite/pangenome_output/extrachromosomal/All_genus_60/clustered_proteins \
+                 $DYSK/gamma_multipartite/pangenome_input/extrachromosomal/All_genus/*.gff
+                 
+# extracting gene_list accessory from all_genus pangenome (chromosome and extrachromosomal)
+cat $DYSK/gamma_multipartite/accessory_output/chromosome/All_genus/All_genus_95.txt \
+    | cut -d':' -f1 > $DYSK/gamma_multipartite/accessory_output/chromosome/All_genus/All_genus_95_gene_list.txt
 
+cat $DYSK/gamma_multipartite/accessory_output/extrachromosomal/All_genus/All_genus_95.txt \
+    | cut -d':' -f1 > $DYSK/gamma_multipartite/accessory_output/extrachromosomal/All_genus/All_genus_95_gene_list.txt
+    
+# extracting representative CDS names from accessory_output files for annotation extraction
+cat $DYSK/gamma_multipartite/accessory_output/chromosome/All_genus/All_genus_95.txt \
+    | cut -d':' -f2 | cut -f1 | sed 's/^ *//g' > $DYSK/gamma_multipartite/accessory_output/chromosome/All_genus/All_genus_95_gene_list_represenative.txt
 
-
-
+cat $DYSK/gamma_multipartite/accessory_output/extrachromosomal/All_genus/All_genus_95.txt \
+    | cut -d':' -f2 | cut -f1 | sed 's/^ *//g' > $DYSK/gamma_multipartite/accessory_output/extrachromosomal/All_genus/All_genus_95_gene_list_represenative.txt

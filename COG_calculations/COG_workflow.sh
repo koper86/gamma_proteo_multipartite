@@ -105,6 +105,29 @@ python COG_fisher_test.py \
     COG_output/Vibrio_chromosome_COG.csv \
     COG_output/Vibrio_extrachromosomal_COG.csv
 
+# -------------------------------------------------------------------------
+# alternative COG calculations for extrachromosomal replicons (based on pangenome
+# calculated for extrachromosomal genus specific replicons together)
+
+python COG_calculations.py accessory_output/extrachromosomal/Pseudoalteromonas_genus/Pseudoalteromonas_genus_95_gene_list_represenative.txt \
+       eggnog_mapping/extrachromosomal/Pseudoalteromonas_genus/Pseudoalteromonas_genus.emapper.annotations \
+       COG_output/Pseudoalteromonas_extrachromosomal_v2_COG.csv
+
+python COG_calculations.py accessory_output/extrachromosomal/Vibrio_genus/Vibrio_genus_95_gene_list_represenative.txt \
+       eggnog_mapping/extrachromosomal/Vibrio_genus/Vibrio_genus.emapper.annotations \
+       COG_output/Vibrio_extrachromosomal_v2_COG.csv
+
+
+# calculating Fisher's exact test for chromosome vs extrachromosomal replicons (v2; based on pangenome
+# calculated for extrachromosomal genus specific replicons together)
+python COG_fisher_test.py \
+    COG_output/Pseudoalteromonas_chromosome_COG.csv \
+    COG_output/Pseudoalteromonas_extrachromosomal_v2_COG.csv
+
+python COG_fisher_test.py \
+    COG_output/Vibrio_chromosome_COG.csv \
+    COG_output/Vibrio_extrachromosomal_v2_COG.csv
+
 #-------------------------------------------------------------------------
 #concatenating all chromosome and extrachromosomal genes lists and annotations into single files
 # chromosome
@@ -176,3 +199,9 @@ python COG_calculations.py \
 python COG_fisher_test.py \
     COG_output/All_chromosome_COG.csv \
     COG_output/All_extrachromosomal_COG.csv
+
+#    -----------------------------------------------------------------------------
+# Alternative version of COG calculations for all replicons based on pangenomes calculated together for chromosomes and chromids+megaplasmids
+# same code as before
+
+
