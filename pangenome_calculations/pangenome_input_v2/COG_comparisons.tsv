@@ -1,0 +1,7 @@
+chromosome/Aliivibrio/calculated_COG.csv	secondary_replicon_1/Aliivibrio/calculated_COG.csv	Aliivibrio_COG_comp.csv
+chromosome/Photobacterium/calculated_COG.csv	secondary_replicon_1/Photobacterium/calculated_COG.csv	Photobacterium_COG_comp.csv
+chromosome/Pseudoalteromonas/calculated_COG.csv	secondary_replicon_1/Pseudoalteromonas/calculated_COG.csv	Pseudoalteromonas_COG_comp.csv
+chromosome/Salinivibrio/calculated_COG.csv	secondary_replicon_1/Salinivibrio/calculated_COG.csv	Salinivibrio_COG_comp.csv
+chromosome/Vibrio/calculated_COG.csv	secondary_replicon_1/Vibrio/calculated_COG.csv	Vibrio_COG_comp.csv
+chromosome/Vibrio_4/calculated_COG.csv	secondary_replicon_2/Vibrio_4/calculated_COG.csv	Vibrio_4_sr2_COG_comp.csv
+chromosome/Vibrionales/calculated_COG.csv	secondary_replicon_1/Vibrionales/calculated_COG.csv	Vibrionales_COG_comp.csv
