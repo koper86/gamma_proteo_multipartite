@@ -28,12 +28,19 @@ ls megaplasmid_gff | wc -l
 # move entire genome and replicon specific gff files to corresponding dirs in pangenome_input
 python pangenome_input_preparation.py prokka_results/ "multipartite_vibrio_pseudo.xls" pangenome_input/
 
+# alternatively (v2) move all gff files from particular directory
+cp **/*.gff .
+
 # according to talk with G diCenzo, species level pangenomes should be calc with
 # a range of tresholds (90, 80..40) and plotted (core genes and and num of total genes as a function of threshold)
-#for the species level stick with 95 percent.
+# for the species level stick with 95 percent.
 nohup python pangenome_calculations.py pangenome_input/ pangenome_output/ >pangenome_output.log &
 
-#make backup for pangenome calc
+# alternatively run roary separetely in pangenome_input_v2 - percent identity set to 60 (optimum for genus level)
+roary -e -n -i 60 -g 100000 -p 12 -v -f pangenome_calc_v2 *.gff
+nohup roary -e -n -i 60 -g 100000 -p 12 -v -f pangenome_calc_v2 *.gff &
+
+# make backup for pangenome calc
 cp -R pangenome_output/ pangenome_output_backup
 
 # plotting core and total genes for genus level calculations
@@ -42,7 +49,11 @@ python pangenome_output_analysis.py
 #ACCESSORY
 # getting list of genes present in 95 percent of strains (accessory genome) from roary set at -i 60
 #chromosome
-query_pan_genome -a complement -c 95 -o accessory_output/chromosome/Aliivibrio_genus/Aliivibrio_genus_95.txt -g /media/umcs/edbfa4a4-ad51-4531-a25d-6022dbd3224c/gamma_multipartite/pangenome_output/chromosome/Aliivibrio_genus_60/clustered_proteins $DYSK/gamma_multipartite/pangenome_input/chromosome/Aliivibrio_genus/*.gff
+query_pan_genome -a complement -c 95 \
+                               -o accessory_output/chromosome/Aliivibrio_genus/Aliivibrio_genus_95.txt \
+                               -g /media/umcs/edbfa4a4-ad51-4531-a25d-6022dbd3224c/gamma_multipartite/pangenome_output/chromosome/Aliivibrio_genus_60/clustered_proteins \
+                               $DYSK/gamma_multipartite/pangenome_input/chromosome/Aliivibrio_genus/*.gff
+
 query_pan_genome -a complement -c 95 -o accessory_output/chromosome/Photobacterium_genus/Photobacterium_genus_95.txt -g /media/umcs/edbfa4a4-ad51-4531-a25d-6022dbd3224c/gamma_multipartite/pangenome_output/chromosome/Photobacterium_genus_60/clustered_proteins $DYSK/gamma_multipartite/pangenome_input/chromosome/Photobacterium_genus/*.gff
 query_pan_genome -a complement -c 95 -o accessory_output/chromosome/Pseudoalteromonas_genus/Pseudoalteromonas_genus_95.txt -g /media/umcs/edbfa4a4-ad51-4531-a25d-6022dbd3224c/gamma_multipartite/pangenome_output/chromosome/Pseudoalteromonas_genus_60/clustered_proteins $DYSK/gamma_multipartite/pangenome_input/chromosome/Pseudoalteromonas_genus/*.gff
 query_pan_genome -a complement -c 95 -o accessory_output/chromosome/Salinivibrio_genus/Salinivibrio_genus_95.txt -g /media/umcs/edbfa4a4-ad51-4531-a25d-6022dbd3224c/gamma_multipartite/pangenome_output/chromosome/Salinivibrio_genus_60/clustered_proteins $DYSK/gamma_multipartite/pangenome_input/chromosome/Salinivibrio_genus/*.gff
@@ -59,6 +70,10 @@ query_pan_genome -a complement -c 95 -o accessory_output/megaplasmid/Pseudoalter
 query_pan_genome -a complement -c 95 -o accessory_output/megaplasmid/Salinivibrio_genus/Salinivibrio_genus_95.txt -g /media/umcs/edbfa4a4-ad51-4531-a25d-6022dbd3224c/gamma_multipartite/pangenome_output/megaplasmid/Salinivibrio_genus_60/clustered_proteins $DYSK/gamma_multipartite/pangenome_input/megaplasmid/Salinivibrio_genus/*.gff
 query_pan_genome -a complement -c 95 -o accessory_output/megaplasmid/Vibrio_genus/Vibrio_genus_95.txt -g /media/umcs/edbfa4a4-ad51-4531-a25d-6022dbd3224c/gamma_multipartite/pangenome_output/megaplasmid/Vibrio_genus_60/clustered_proteins $DYSK/gamma_multipartite/pangenome_input/megaplasmid/Vibrio_genus/*.gff
 
+# alternatively use loop with file as an input (script running in main directory)
+while read OUTPUT_PATH CLUSTERED_PROTEINS GFF_PATH; do
+  query_pan_genome -a complement -c 95 -o $OUTPUT_PATH -g $CLUSTERED_PROTEINS $GFF_PATH
+done < accessory_pangenome_extraction_paths.tsv
 
 # extracting gene_list from accessory_output files
 # chromosome
@@ -78,6 +93,14 @@ cat accessory_output/chromid/Vibrio_genus/Vibrio_genus_95.txt | cut -d':' -f1 > 
 cat accessory_output/megaplasmid/Pseudoalteromonas_genus/Pseudoalteromonas_genus_95.txt | cut -d':' -f1 > accessory_output/megaplasmid/Pseudoalteromonas_genus/Pseudoalteromonas_genus_95_gene_list.txt
 cat accessory_output/megaplasmid/Salinivibrio_genus/Salinivibrio_genus_95.txt | cut -d':' -f1 > accessory_output/megaplasmid/Salinivibrio_genus/Salinivibrio_genus_95_gene_list.txt
 cat accessory_output/megaplasmid/Vibrio_genus/Vibrio_genus_95.txt | cut -d':' -f1 > accessory_output/megaplasmid/Vibrio_genus/Vibrio_genus_95_gene_list.txt
+
+# loop to do the same thing (v2)
+while read INPUT_PATH; do
+  FILENAME=$(basename ${INPUT_PATH} .txt)
+  DIRNAME=$(dirname ${INPUT_PATH})
+  cat ${INPUT_PATH} | cut -d':' -f1 > ${DIRNAME}/${FILENAME}_gene_list.txt
+  cat ${INPUT_PATH} | cut -d':' -f2 | cut -f1 | sed 's/^ *//g' > ${DIRNAME}/${FILENAME}_representative_list.txt
+done < accessory_pangenome_extraction_paths.tsv
 
 # extracting representative CDS names from accessory_output files for COG extraction
 # chromosome

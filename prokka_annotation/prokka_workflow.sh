@@ -5,6 +5,31 @@ tar -xvf Multipartite.tar
 tar -zxvf Alteromonadales.tar.gz
 tar -zxvf Vibrionales.tar.gz
 
+#alternatively downloading fasta files by accession
+#code run corresponding folder inside pangenome_input_v2 dir
+while read ACC_NUMBER; do
+  ncbi-acc-download -m nucleotide \
+                    -F fasta \
+                    -v \
+                    ${ACC_NUMBER}
+done < secondary_replicon_1_Vibrionales.txt
+
+chromosome_Aliivibrio.txt
+chromosome_Photobacterium.txt
+chromosome_Pseudoalteromonas.txt
+chromosome_Salinivibrio.txt
+chromosome_Vibrio.txt
+chromosome_Vibrio_4.txt
+chromosome_Vibrionales.txt
+secondary_replicon_1_Aliivibrio.txt
+secondary_replicon_1_Photobacterium.txt
+secondary_replicon_1_Pseudoalteromonas.txt
+secondary_replicon_1_Salinivibrio.txt
+secondary_replicon_1_Vibrio.txt
+secondary_replicon_1_Vibrionales.txt
+secondary_replicon_2_Vibrio_4.txt
+
+
 # running prokka_annotation.py, input_data and prokka_results parameters are relative or absolute paths
 nohup python prokka_annotation.py  Multipartite/ prokka_results > prokka_annotation.log &
 
@@ -82,7 +107,10 @@ comm -23 excel_sorted.txt prokka_done_sorted.txt
 ./basename_change.sh prokka_results/Genomes_Vibrionales/Vibrio_tritonius/ "_AM2."
 ./basename_change.sh prokka_results/Genomes_Vibrionales/Vibrio_vulnificus/ "_2497-87."
 
-
+# alternatively run prokka with use of bash script
+while read ACC_NUMBER; do
+  prokka --outdir ${ACC_NUMBER} --prefix ${ACC_NUMBER} --fast --norna --notrna --cpus 12 ${ACC_NUMBER}.fa
+done < secondary_replicon_2_Vibrio_4.txt
 
 
 

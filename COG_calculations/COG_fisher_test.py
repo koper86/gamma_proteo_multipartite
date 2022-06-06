@@ -9,6 +9,7 @@ pd.options.display.width = None
 try:
     replicon_1_COG_file = sys.argv[1]
     replicon_2_COG_file = sys.argv[2]
+    output_path = sys.argv[3]
 except:
     print('No folders or files names provided')
 
@@ -91,4 +92,6 @@ replicon_2_name = os.path.basename(replicon_2_COG_file).split('_')[1]
 # outputing csv with calculations
 output_csv_path = os.path.join(os.path.dirname(replicon_1_COG_file),
                                f'{genus_name}_{replicon_1_name}_vs_{replicon_2_name}.csv')
-replicon_1_2_df.to_csv(output_csv_path, index=False)
+# replicon_1_2_df.to_csv(output_csv_path, index=False)
+# output from command-line args
+replicon_1_2_df.to_csv(output_path, index=False)

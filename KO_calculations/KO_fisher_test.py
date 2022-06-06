@@ -5,6 +5,7 @@ import scipy.stats as stats
 
 replicon_1_KO_file = sys.argv[1]
 replicon_2_KO_file = sys.argv[2]
+output_csv_path = sys.argv[3]
 
 # replicon_1_KO_file = '/home/user/PycharmProjects/gamma_proteo_multipartite/KO_calculations/Aliivibrio_chromosome_KO.csv'
 # replicon_2_KO_file = '/home/user/PycharmProjects/gamma_proteo_multipartite/KO_calculations/Aliivibrio_chromid_KO.csv'
@@ -40,6 +41,7 @@ genus_name, replicon_1_name = os.path.basename(replicon_1_KO_file).split('_')[0:
 replicon_2_name = os.path.basename(replicon_2_KO_file).split('_')[1]
 
 # outputing csv with calculations
-output_csv_path = os.path.join(os.path.dirname(replicon_1_KO_file),
-                               f'{genus_name}_{replicon_1_name}_vs_{replicon_2_name}.csv')
+# output_csv_path = os.path.join(os.path.dirname(replicon_1_KO_file),
+#                                f'{genus_name}_{replicon_1_name}_vs_{replicon_2_name}.csv')
+
 replicon_1_2_df.to_csv(output_csv_path, index=False)
