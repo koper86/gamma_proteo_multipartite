@@ -54,6 +54,13 @@ while read OUTPUT_PATH CLUSTERED_PROTEINS GFF_PATH; do
   query_pan_genome -a intersection -c 95 -o $OUTPUT_PATH -g $CLUSTERED_PROTEINS $GFF_PATH
 done < core_pangenome_extraction_paths.tsv
 ```
+File formating; extracting gene and representative names
+```bash
+while read INPUT_PATH; do
+  cat ${INPUT_PATH}/core_95.txt | cut -d':' -f1 > ${INPUT_PATH}/core_95_gene_list.txt
+  cat ${INPUT_PATH}/core_95.txt | cut -d':' -f2 | cut -f1 | sed 's/^ *//g' > ${INPUT_PATH}/core_95_representative_list.txt
+done < general_paths.tsv
+```
 
 File formatting; extracting gene and representatives names
 ```bash
@@ -88,7 +95,7 @@ while read INPUT_PATH; do
     python COG_calculations.py ${INPUT_PATH}/accessory_95_representative_list.txt \
                                ${INPUT_PATH}/pangenome_calc_v2/emapper_annot.emapper.annotations \
                                ${INPUT_PATH}/calculated_KO.csv
-done < COG_calculations_paths.tsv
+done < general_paths.tsv
 ```
 ## Calculating COG abundance differences
 ```bash
@@ -98,7 +105,6 @@ while read FIRST_COMP SECOND_COMP OUTPUT_PATH; do
         ${SECOND_COMP} \
         ${OUTPUT_PATH}
 done < COG_comparisons.tsv
-
 ```
 ## Extracting KO categories from eggNOG annotation and calculating quantity
 ```bash
@@ -107,7 +113,7 @@ while read INPUT_PATH; do
                             ${INPUT_PATH}/pangenome_calc_v2/emapper_annot.emapper.annotations \
                             ${INPUT_PATH}/calculated_KO.csv \
                             ko00001.json
-done < COG_KO_calculations_paths.tsv
+done < general_paths.tsv
 ```
 ## Calculating KO abundance differences
 ```bash
@@ -125,3 +131,16 @@ python COG_bar_plot.py
 python KO_bar_plot.py
 ```
 
+## Extracting full eggNOG annotation for desired list of genomes
+```bash
+while read INPUT_PATH; do
+    python eggnog_annotation_extraction.py \
+          ${INPUT_PATH}/core_95_representative_list.txt  \
+          ${INPUT_PATH}/pangenome_calc_v2/emapper_annot.emapper.annotations \
+          ${INPUT_PATH}/core_95_representative_list_annotation.tsv
+    python eggnog_annotation_extraction.py \
+          ${INPUT_PATH}/accessory_95_representative_list.txt  \
+          ${INPUT_PATH}/pangenome_calc_v2/emapper_annot.emapper.annotations \
+          ${INPUT_PATH}/accessory_95_representative_list_annotation.tsv
+done < general_paths.tsv
+```

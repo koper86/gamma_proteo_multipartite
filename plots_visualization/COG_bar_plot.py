@@ -40,21 +40,49 @@ union_df = union_df[union_df['COG count'] != 0]
 union_df = union_df[~union_df['COG category'].isin(['-'])]
 union_df = union_df[union_df['COG percent'] >= 0.5]
 
-g = sns.catplot(
-    data=union_df[union_df['Replicon type'].isin(['chromosome', 'secondary_replicon'])],
-    y="COG category",
-    x="COG percent",
-    kind="bar",
-    hue="Replicon type",
-    hue_order=['chromosome', 'secondary_replicon'],
-    ci=None,
+# g = sns.catplot(
+#     data=union_df[union_df['Replicon type'].isin(['chromosome', 'secondary_replicon'])],
+#     y="COG category",
+#     x="COG percent",
+#     kind="bar",
+#     hue="Replicon type",
+#     hue_order=['chromosome', 'secondary_replicon'],
+#     ci=None,
+#     aspect=3,
+#     height=4,
+#     col="Genus",
+#     col_wrap=3,
+# )
+# g.set_titles('$\it{col_name}$')
+# g.fig.suptitle("Comparison of COG enrichment within chromosome and extrachromosomal replicons", y=1.05)
+
+# preparing data for plot of percent of COG categories
+chromosome_COG_df = union_df.loc[union_df['Replicon type'].isin(['chromosome'])]
+secondary_replicon_COG_df = union_df.loc[union_df['Replicon type'].isin(['secondary_replicon'])]
+
+merged_replicon_COG_df = pd.merge(chromosome_COG_df,
+                                  secondary_replicon_COG_df,
+                                  how='left',
+                                  left_on=['COG category','Genus'],
+                                  right_on = ['COG category','Genus']).fillna(0)
+
+
+g = sns.relplot(
+    data=merged_replicon_COG_df,
+    x='COG percent_x',
+    y='COG percent_y',
+    col='Genus',
+    s=100,
+    col_wrap=3,
     aspect=3,
     height=4,
-    col="Genus",
-    col_wrap=3,
+    style='COG category',
+    hue='COG category',
 )
-g.set_titles('$\it{col_name}$')
-g.fig.suptitle("Comparison of COG enrichment within chromosome and extrachromosomal replicons", y=1.05)
+g.set(ylim=(0, 30))
+g.set(xlim=(0, 30))
+plt.show()
+
 
 # sns.catplot(
 #     data=union_df[union_df['Replicon type'].isin(['chromosome', 'extrachromosomal'])],
@@ -67,3 +95,4 @@ g.fig.suptitle("Comparison of COG enrichment within chromosome and extrachromoso
 #     aspect=3,
 #     height=4,
 # )
+
